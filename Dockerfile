@@ -1,4 +1,4 @@
-FROM golang:1.6.2-alpine
+FROM golang:1.9.3-alpine3.7
 
 MAINTAINER Sergiu Groza <serioja90@gmail.com>
 
@@ -10,7 +10,7 @@ RUN go install github.com/kahing/goofys
 
 # add syslog-ng (syslog required by Goofys)
 RUN apk add syslog-ng
-RUN echo "@version: 3.7" > /etc/syslog-ng/syslog-ng.conf
+RUN echo "@version: 3.9" > /etc/syslog-ng/syslog-ng.conf
 RUN echo "source s_local {internal();network(transport("udp"));unix-dgram("/dev/log");};" >> /etc/syslog-ng/syslog-ng.conf
 RUN echo "destination d_local {file("/var/log/messages");};" >> /etc/syslog-ng/syslog-ng.conf
 RUN echo "log {source(s_local);destination(d_local);};" >> /etc/syslog-ng/syslog-ng.conf
